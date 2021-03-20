@@ -7,7 +7,7 @@ set(SRCS
     HttpData.cpp
     Main.cpp
     Server.cpp
-    ThreadPool.cpp
+   #ThreadPool.cpp
     Timer.cpp
     Util.cpp
 )
