@@ -4,11 +4,8 @@ set -x
 
 SOURCE_DIR=`pwd`
 BUILD_DIR=${BUILD_DIR:-./build}
-BUILD_TYPE=${BUILD_TYPE:-Debug}
-
-mkdir -p $BUILD_DIR/$BUILD_TYPE \
-    && cd $BUILD_DIR/$BUILD_TYPE \
-    && cmake \
-            -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
-            $SOURCE_DIR \
+BINARY_DIR=${BINARY_DIR:-./bin}
+mkdir $BUILD_DIR $BINARY_DIR \
+    && cd $BUILD_DIR \
+    && cmake $SOURCE_DIR \
     && make $*

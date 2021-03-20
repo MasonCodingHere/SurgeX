@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 
 project(SurgeX CXX)
 
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug")
 endif()
