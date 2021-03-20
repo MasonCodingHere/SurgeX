@@ -7,7 +7,6 @@
 #include "MutexLock.h"
 #include "noncopyable.h"
 
-
 class Condition : noncopyable {
  public:
   explicit Condition(MutexLock &_mutex) : mutex(_mutex) {

@@ -5,7 +5,6 @@
 #include <string>
 #include "LogStream.h"
 
-
 class AsyncLogging;
 
 class Logger {

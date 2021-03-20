@@ -5,7 +5,6 @@
 #include "base/Thread.h"
 #include "base/noncopyable.h"
 
-
 class EventLoopThread : noncopyable {
  public:
   EventLoopThread();

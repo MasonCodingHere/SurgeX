@@ -1,4 +1,3 @@
-
 // This file has not been used
 #pragma once
 #include "Channel.h"

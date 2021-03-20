@@ -5,7 +5,6 @@
 #include "MutexLock.h"
 #include "noncopyable.h"
 
-
 // TODO 提供自动归档功能
 class LogFile : noncopyable {
  public:

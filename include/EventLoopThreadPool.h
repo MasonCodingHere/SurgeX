@@ -5,7 +5,6 @@
 #include "base/Logging.h"
 #include "base/noncopyable.h"
 
-
 class EventLoopThreadPool : noncopyable {
  public:
   EventLoopThreadPool(EventLoop* baseLoop, int numThreads);

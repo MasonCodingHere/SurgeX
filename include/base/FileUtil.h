@@ -2,7 +2,6 @@
 #include <string>
 #include "noncopyable.h"
 
-
 class AppendFile : noncopyable {
  public:
   explicit AppendFile(std::string filename);

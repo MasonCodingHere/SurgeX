@@ -7,7 +7,6 @@
 #include "base/MutexLock.h"
 #include "base/noncopyable.h"
 
-
 class HttpData;
 
 class TimerNode {

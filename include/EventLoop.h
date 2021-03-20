@@ -8,9 +8,8 @@
 #include "base/CurrentThread.h"
 #include "base/Logging.h"
 #include "base/Thread.h"
-
-
 #include <iostream>
+
 using namespace std;
 
 class EventLoop {

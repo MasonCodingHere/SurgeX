@@ -9,9 +9,8 @@
 #include <unistd.h>
 #include <memory>
 #include "CurrentThread.h"
-
-
 #include <iostream>
+
 using namespace std;
 
 namespace CurrentThread {

@@ -1,5 +1,3 @@
-
-
 // This file has not been used
 #include "ThreadPool.h"
 

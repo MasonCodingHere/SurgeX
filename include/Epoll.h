@@ -7,7 +7,6 @@
 #include "HttpData.h"
 #include "Timer.h"
 
-
 class Epoll {
  public:
   Epoll();
