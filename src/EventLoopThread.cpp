@@ -1,5 +1,3 @@
-// @Author Lin Ya
-// @Email xxbbb@vip.qq.com
 #include "EventLoopThread.h"
 #include <functional>
 

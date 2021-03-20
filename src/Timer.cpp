@@ -1,5 +1,3 @@
-// @Author Lin Ya
-// @Email xxbbb@vip.qq.com
 #include "Timer.h"
 #include <sys/time.h>
 #include <unistd.h>

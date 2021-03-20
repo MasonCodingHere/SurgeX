@@ -1,5 +1,3 @@
-// @Author Lin Ya
-// @Email xxbbb@vip.qq.com
 #include "EventLoopThreadPool.h"
 
 EventLoopThreadPool::EventLoopThreadPool(EventLoop *baseLoop, int numThreads)

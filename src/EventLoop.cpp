@@ -1,5 +1,3 @@
-// @Author Lin Ya
-// @Email xxbbb@vip.qq.com
 #include "EventLoop.h"
 #include <sys/epoll.h>
 #include <sys/eventfd.h>

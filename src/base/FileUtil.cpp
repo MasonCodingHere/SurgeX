@@ -1,5 +1,3 @@
-// @Author Lin Ya
-// @Email xxbbb@vip.qq.com
 #include "FileUtil.h"
 #include <assert.h>
 #include <errno.h>
