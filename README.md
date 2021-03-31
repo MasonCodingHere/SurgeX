@@ -11,7 +11,7 @@ SurgeX是一款使用C++11编写的轻量级Web服务器，目前支持解析GET
 ## Usage
 ### Clone
 ```shell
-git clone https://github.com/xgx127/SurgeX.git
+git clone https://github.com/mrxuxg/SurgeX.git
 ```
 ### Build
 ```shell
