@@ -33,4 +33,4 @@ cd SurgeX
 - 使用状态机解析了HTTP请求,支持管线化请求。
 - 支持优雅关闭连接。  
 ## Model
-并发模型为Reactor+非阻塞IO+线程池，新连接Round Robin分配。
+并发模型为Reactor+非阻塞IO+线程池，新连接采用Round Robin分配。
