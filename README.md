@@ -1,5 +1,5 @@
 # SurgeX——A Lightweight Web Server Based On C++
-[![Build Status](https://travis-ci.com/xgx127/SurgeX.svg?branch=master)](https://travis-ci.com/xgx127/SurgeX) ![GitHub](https://img.shields.io/github/license/xgx127/SurgeX)
+[![Build Status](https://travis-ci.com/mrxuxg/SurgeX.svg?branch=master)](https://travis-ci.com/mrxuxg/SurgeX) ![GitHub](https://img.shields.io/github/license/mrxuxg/SurgeX)
 ## Introduction
 SurgeX是一款使用C++11编写的轻量级Web服务器，目前支持解析GET、HEAD请求，可处理静态资源，支持HTTP长连接和管线化请求，并实现了异步日志以记录服务器运行状态。
 ## Environment
@@ -33,4 +33,4 @@ cd SurgeX
 - 使用状态机解析了HTTP请求,支持管线化请求。
 - 支持优雅关闭连接。  
 ## Model
-并发模型为Reactor+非阻塞IO+线程池，新连接采用Round Robin分配。
+并发模型为Reactor+非阻塞IO+线程池，新连接Round Robin分配。
