@@ -25,7 +25,6 @@ class EventLoop {
   void assertInLoopThread() { assert(isInLoopThread()); }
   void shutdown(shared_ptr<Channel> channel) { shutDownWR(channel->getFd()); }
   void removeFromPoller(shared_ptr<Channel> channel) {
-    // shutDownWR(channel->getFd());
     poller_->epoll_del(channel);
   }
   void updatePoller(shared_ptr<Channel> channel, int timeout = 0) {
