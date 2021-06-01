@@ -9,20 +9,20 @@ extern __thread int t_tidStringLength;
 extern __thread const char* t_threadName;
 void cacheTid();
 inline int tid() {
-  if (__builtin_expect(t_cachedTid == 0, 0)) {
-    cacheTid();
-  }
-  return t_cachedTid;
+    if (__builtin_expect(t_cachedTid == 0, 0)) {
+        cacheTid();
+    }
+    return t_cachedTid;
 }
 
-inline const char* tidString()  // for logging
+inline const char* tidString()    // for logging
 {
-  return t_tidString;
+    return t_tidString;
 }
 
-inline int tidStringLength()  // for logging
+inline int tidStringLength()    // for logging
 {
-  return t_tidStringLength;
+    return t_tidStringLength;
 }
 
 inline const char* name() { return t_threadName; }
