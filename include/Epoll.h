@@ -8,7 +8,7 @@
 #include "Timer.h"
 
 class Epoll {
- public:
+public:
   Epoll();
   ~Epoll();
   void epoll_add(SP_Channel request, int timeout);
@@ -20,7 +20,7 @@ class Epoll {
   int getEpollFd() { return epollFd_; }
   void handleExpired();
 
- private:
+private:
   static const int MAXFDS = 100000;
   int epollFd_;
   std::vector<epoll_event> events_;
