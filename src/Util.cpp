@@ -9,6 +9,7 @@
 #include <unistd.h>
 
 const int MAX_BUFF = 4096;
+const int LISTEN_QUEUE = 2048;
 
 ssize_t readn(int fd, void *buff, size_t n) {
     size_t nleft = n;
@@ -140,7 +141,8 @@ void handle_for_sigpipe() {
     memset(&sa, '\0', sizeof(sa));
     sa.sa_handler = SIG_IGN;
     sa.sa_flags = 0;
-    if (sigaction(SIGPIPE, &sa, NULL)) return;
+    if (sigaction(SIGPIPE, &sa, NULL)) 
+        return;
 }
 
 int setSocketNonBlocking(int fd) {
@@ -180,8 +182,7 @@ int socket_bind_listen(int port) {
 
     // 消除bind时"Address already in use"错误
     int optval = 1;
-    if (setsockopt(listen_fd, SOL_SOCKET, SO_REUSEADDR, &optval,
-                                 sizeof(optval)) == -1) {
+    if (setsockopt(listen_fd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval)) == -1) {
         close(listen_fd);
         return -1;
     }
@@ -196,7 +197,7 @@ int socket_bind_listen(int port) {
         return -1;
     }
 
-    if (listen(listen_fd, 2048) == -1) {
+    if (listen(listen_fd, LISTEN_QUEUE) == -1) {
         close(listen_fd);
         return -1;
     }
