@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include <string>
 
-
 // Read "n" bytes from a descriptor.
 ssize_t readn(int fd, void *buff, size_t n);
 ssize_t readn(int fd, std::string &inBuffer, bool &zero);
