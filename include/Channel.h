@@ -34,7 +34,7 @@ class Channel {
  public:
   Channel(EventLoop *loop);
   Channel(EventLoop *loop, int fd);
-  ~Channel();
+  ~Channel() = default;
   int getFd();
   void setFd(int fd);
 
