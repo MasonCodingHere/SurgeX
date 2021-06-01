@@ -47,16 +47,11 @@ ssize_t readn(int fd, std::string &inBuffer, bool &zero) {
         return -1;
       }
     } else if (nread == 0) {
-      // printf("redsum = %d\n", readSum);
       zero = true;
       break;
     }
-    // printf("before inBuffer.size() = %d\n", inBuffer.size());
-    // printf("nread = %d\n", nread);
     readSum += nread;
-    // buff += nread;
     inBuffer += std::string(buff, buff + nread);
-    // printf("after inBuffer.size() = %d\n", inBuffer.size());
   }
   return readSum;
 }
@@ -76,15 +71,10 @@ ssize_t readn(int fd, std::string &inBuffer) {
         return -1;
       }
     } else if (nread == 0) {
-      // printf("redsum = %d\n", readSum);
       break;
     }
-    // printf("before inBuffer.size() = %d\n", inBuffer.size());
-    // printf("nread = %d\n", nread);
     readSum += nread;
-    // buff += nread;
     inBuffer += std::string(buff, buff + nread);
-    // printf("after inBuffer.size() = %d\n", inBuffer.size());
   }
   return readSum;
 }
@@ -173,14 +163,10 @@ void setSocketNoLinger(int fd) {
 
 void shutDownWR(int fd) {
   shutdown(fd, SHUT_WR);
-  // printf("shutdown\n");
 }
 
 int socket_bind_listen(int port) {
-  // 检查port值，取正确区间范围
   if (port < 0 || port > 65535) return -1;
-
-  // 创建socket(IPv4 + TCP)，返回监听描述符
   int listen_fd = 0;
   if ((listen_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) return -1;
 
@@ -192,7 +178,6 @@ int socket_bind_listen(int port) {
     return -1;
   }
 
-  // 设置服务器IP和Port，和监听描述副绑定
   struct sockaddr_in server_addr;
   bzero((char *)&server_addr, sizeof(server_addr));
   server_addr.sin_family = AF_INET;
@@ -204,13 +189,11 @@ int socket_bind_listen(int port) {
     return -1;
   }
 
-  // 开始监听，最大等待队列长为LISTENQ
   if (listen(listen_fd, 2048) == -1) {
     close(listen_fd);
     return -1;
   }
 
-  // 无效监听描述符
   if (listen_fd == -1) {
     close(listen_fd);
     return -1;
