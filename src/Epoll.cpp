@@ -65,8 +65,6 @@ void Epoll::epoll_del(SP_Channel request) {
   struct epoll_event event;
   event.data.fd = fd;
   event.events = request->getLastEvents();
-  // event.events = 0;
-  // request->EqualAndUpdateLastEvents()
   if (epoll_ctl(epollFd_, EPOLL_CTL_DEL, fd, &event) < 0) {
     perror("epoll_del error");
   }

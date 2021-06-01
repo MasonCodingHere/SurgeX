@@ -11,7 +11,6 @@ LogFile::LogFile(const string& basename, int flushEveryN)
       flushEveryN_(flushEveryN),
       count_(0),
       mutex_(new MutexLock) {
-  // assert(basename.find('/') >= 0);
   file_.reset(new AppendFile(basename));
 }
 

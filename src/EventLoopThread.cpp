@@ -37,6 +37,5 @@ void EventLoopThread::threadFunc() {
   }
 
   loop.loop();
-  // assert(exiting_);
   loop_ = NULL;
 }

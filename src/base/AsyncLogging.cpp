@@ -72,23 +72,14 @@ void AsyncLogging::threadFunc() {
     assert(!buffersToWrite.empty());
 
     if (buffersToWrite.size() > 25) {
-      // char buf[256];
-      // snprintf(buf, sizeof buf, "Dropped log messages at %s, %zd larger
-      // buffers\n",
-      //          Timestamp::now().toFormattedString().c_str(),
-      //          buffersToWrite.size()-2);
-      // fputs(buf, stderr);
-      // output.append(buf, static_cast<int>(strlen(buf)));
       buffersToWrite.erase(buffersToWrite.begin() + 2, buffersToWrite.end());
     }
 
     for (size_t i = 0; i < buffersToWrite.size(); ++i) {
-      // FIXME: use unbuffered stdio FILE ? or use ::writev ?
       output.append(buffersToWrite[i]->data(), buffersToWrite[i]->length());
     }
 
     if (buffersToWrite.size() > 2) {
-      // drop non-bzero-ed buffers, avoid trashing
       buffersToWrite.resize(2);
     }
 

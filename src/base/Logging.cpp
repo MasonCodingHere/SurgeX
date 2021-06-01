@@ -10,7 +10,7 @@
 static pthread_once_t once_control_ = PTHREAD_ONCE_INIT;
 static AsyncLogging *AsyncLogger_;
 
-std::string Logger::logFileName_ = "./WebServer.log";
+std::string Logger::logFileName_ = "./SurgeX.log";
 
 void once_init()
 {
