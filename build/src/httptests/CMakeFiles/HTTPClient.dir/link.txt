@@ -1,1 +1,0 @@
-g++ -g -Wall -std=c++11 -D_PTHREADS -Wno-unused-parameter -O0 -rdynamic CMakeFiles/HTTPClient.dir/HTTPClient.cpp.o -o ../../../bin/HTTPClient 
