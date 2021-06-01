@@ -119,21 +119,18 @@ HttpData::HttpData(EventLoop *loop, int connfd)
       state_(STATE_PARSE_URI),
       hState_(H_START),
       keepAlive_(false) {
-  // loop_->queueInLoop(bind(&HttpData::setHandlers, this));
   channel_->setReadHandler(bind(&HttpData::handleRead, this));
   channel_->setWriteHandler(bind(&HttpData::handleWrite, this));
   channel_->setConnHandler(bind(&HttpData::handleConn, this));
 }
 
 void HttpData::reset() {
-  // inBuffer_.clear();
   fileName_.clear();
   path_.clear();
   nowReadPos_ = 0;
   state_ = STATE_PARSE_URI;
   hState_ = H_START;
   headers_.clear();
-  // keepAlive_ = false;
   if (timer_.lock()) {
     shared_ptr<TimerNode> my_timer(timer_.lock());
     my_timer->clearReq();
@@ -142,7 +139,6 @@ void HttpData::reset() {
 }
 
 void HttpData::seperateTimer() {
-  // cout << "seperateTimer" << endl;
   if (timer_.lock()) {
     shared_ptr<TimerNode> my_timer(timer_.lock());
     my_timer->clearReq();
@@ -160,18 +156,12 @@ void HttpData::handleRead() {
       inBuffer_.clear();
       break;
     }
-    // cout << inBuffer_ << endl;
     if (read_num < 0) {
       perror("1");
       error_ = true;
       handleError(fd_, 400, "Bad Request");
       break;
     }
-    // else if (read_num == 0)
-    // {
-    //     error_ = true;
-    //     break;
-    // }
     else if (zero) {
       // 有请求出现但是读不到数据，可能是Request
       // Aborted，或者来自网络的数据没有达到等原因
@@ -179,10 +169,8 @@ void HttpData::handleRead() {
       // error_ = true;
       connectionState_ = H_DISCONNECTING;
       if (read_num == 0) {
-        // error_ = true;
         break;
       }
-      // cout << "readnum == 0" << endl;
     }
 
     if (state_ == STATE_PARSE_URI) {
@@ -220,8 +208,8 @@ void HttpData::handleRead() {
       int content_length = -1;
       if (headers_.find("Content-length") != headers_.end()) {
         content_length = stoi(headers_["Content-length"]);
-      } else {
-        // cout << "(state_ == STATE_RECV_BODY)" << endl;
+      } 
+      else {
         error_ = true;
         handleError(fd_, 400, "Bad Request: Lack of argument (Content-length)");
         break;
@@ -234,18 +222,17 @@ void HttpData::handleRead() {
       if (flag == ANALYSIS_SUCCESS) {
         state_ = STATE_FINISH;
         break;
-      } else {
-        // cout << "state_ == STATE_ANALYSIS" << endl;
+      } 
+      else {
         error_ = true;
         break;
       }
     }
   } while (false);
-  // cout << "state_=" << state_ << endl;
+  
   if (!error_) {
     if (outBuffer_.size() > 0) {
       handleWrite();
-      // events_ |= EPOLLOUT;
     }
     // error_ may change
     if (!error_ && state_ == STATE_FINISH) {
@@ -253,14 +240,8 @@ void HttpData::handleRead() {
       if (inBuffer_.size() > 0) {
         if (connectionState_ != H_DISCONNECTING) handleRead();
       }
-
-      // if ((keepAlive_ || inBuffer_.size() > 0) && connectionState_ ==
-      // H_CONNECTED)
-      // {
-      //     this->reset();
-      //     events_ |= EPOLLIN;
-      // }
-    } else if (!error_ && connectionState_ != H_DISCONNECTED)
+    } 
+    else if (!error_ && connectionState_ != H_DISCONNECTED)
       events_ |= EPOLLIN;
   }
 }
@@ -288,29 +269,26 @@ void HttpData::handleConn() {
         events_ = __uint32_t(0);
         events_ |= EPOLLOUT;
       }
-      // events_ |= (EPOLLET | EPOLLONESHOT);
       events_ |= EPOLLET;
       loop_->updatePoller(channel_, timeout);
 
-    } else if (keepAlive_) {
+    } 
+    else if (keepAlive_) {
       events_ |= (EPOLLIN | EPOLLET);
-      // events_ |= (EPOLLIN | EPOLLET | EPOLLONESHOT);
       int timeout = DEFAULT_KEEP_ALIVE_TIME;
       loop_->updatePoller(channel_, timeout);
-    } else {
-      // cout << "close normally" << endl;
-      // loop_->shutdown(channel_);
-      // loop_->runInLoop(bind(&HttpData::handleClose, shared_from_this()));
+    } 
+    else {
       events_ |= (EPOLLIN | EPOLLET);
-      // events_ |= (EPOLLIN | EPOLLET | EPOLLONESHOT);
       int timeout = (DEFAULT_KEEP_ALIVE_TIME >> 1);
       loop_->updatePoller(channel_, timeout);
     }
-  } else if (!error_ && connectionState_ == H_DISCONNECTING &&
+  } 
+  else if (!error_ && connectionState_ == H_DISCONNECTING &&
              (events_ & EPOLLOUT)) {
     events_ = (EPOLLOUT | EPOLLET);
-  } else {
-    // cout << "close with errors" << endl;
+  } 
+  else {
     loop_->runInLoop(bind(&HttpData::handleClose, shared_from_this()));
   }
 }
