@@ -9,17 +9,14 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 set(CXX_FLAGS
-    -g
-    -Wall
     -lpthread
-    -Wno-unused-parameter
     -lmysqlclient
 )
 
 
 set(CMAKE_CXX_COMPILER "g++")
 set(CMAKE_CXX_FLAGS_DEBUG "-O0")
-set(CMAKE_CXX_FLAGS_RELEASE "-O0")
+set(CMAKE_CXX_FLAGS_RELEASE "-O2")
 
 string(REPLACE ";" " " CMAKE_CXX_FLAGS "${CXX_FLAGS}")
 
