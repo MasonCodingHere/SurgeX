@@ -46,25 +46,26 @@ Linux下C++轻量级Web服务器，助力初学者快速实践网络编程，搭
 
 * build
 
-    ```C++
-    sh ./build.sh
+    ```shell
+    ./build.sh
     ```
 
 * 启动server
 
-    ```C++
-    ./server
+    ```shell
+    cd bin
+    ./SurgeX
     ```
 
 * 浏览器端
 
-    ```C++
+    ```shell
     ip:2021
     ```
 
 ## 个性化运行
 ```C++
-./server [-p port] [-l LOGWrite] [-m TRIGMode] [-o OPT_LINGER] [-s sql_num] [-t thread_num] [-c close_log] [-a actor_model]
+./SurgeX [-p port] [-l LOGWrite] [-m TRIGMode] [-o OPT_LINGER] [-s sql_num] [-t thread_num] [-c close_log] [-a actor_model]
 ```
 
 温馨提示:以上参数不是非必须，不用全部使用，根据个人情况搭配选用即可.
