@@ -10,7 +10,7 @@ install:
 services:
   - mysql
 before_install:
-  - mysql -e 'CREATE DATABASE SurgeX_DB;'
+  - sudo mysql -e 'CREATE DATABASE SurgeX_DB;'
 env:
   - BUILD_TYPE=debug
   - BUILD_TYPE=release
