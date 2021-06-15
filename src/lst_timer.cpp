@@ -1,5 +1,5 @@
-#include "../include/lst_timer.h"
-#include "../include/http_conn.h"
+#include "lst_timer.h"
+#include "http_conn.h"
 
 sort_timer_lst::sort_timer_lst()
 {
