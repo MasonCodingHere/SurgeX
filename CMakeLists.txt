@@ -9,6 +9,9 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 set(CXX_FLAGS
+    -g
+    -Wall
+    -Wno-unused-parameter
     -lpthread
     -lmysqlclient
 )
