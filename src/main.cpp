@@ -1,10 +1,10 @@
-#include "../include/config.h"
+#include "config.h"
 
 int main(int argc, char *argv[])
 {
     //需要修改的数据库信息,登录名,密码,库名
     string user = "root";
-    string passwd = "";
+    string passwd = "123456";
     string databasename = "SurgeX_DB";
 
     //命令行解析
