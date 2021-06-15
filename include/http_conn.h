@@ -21,10 +21,10 @@
 #include <sys/uio.h>
 #include <map>
 
-#include "../lock/locker.h"
-#include "../CGImysql/sql_connection_pool.h"
-#include "../timer/lst_timer.h"
-#include "../log/log.h"
+#include "locker.h"
+#include "sql_connection_pool.h"
+#include "lst_timer.h"
+#include "log.h"
 
 class http_conn
 {
