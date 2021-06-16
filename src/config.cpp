@@ -7,14 +7,14 @@ Config::Config(){
     //日志写入方式，默认同步
     LOGWrite = 0;
 
-    //触发组合模式,默认listenfd LT + connfd LT
-    TRIGMode = 0;
+    //触发组合模式,默认listenfd LT + connfd ET
+    TRIGMode = 1;
 
     //listenfd触发模式，默认LT
     LISTENTrigmode = 0;
 
-    //connfd触发模式，默认LT
-    CONNTrigmode = 0;
+    //connfd触发模式，默认ET
+    CONNTrigmode = 1;
 
     //优雅关闭链接，默认不使用
     OPT_LINGER = 0;
@@ -28,8 +28,8 @@ Config::Config(){
     //关闭日志,默认不关闭
     close_log = 0;
 
-    //并发模型,默认是proactor
-    actor_model = 0;
+    //并发模型,默认是Reactor
+    actor_model = 1;
 }
 
 void Config::parse_arg(int argc, char*argv[]){
