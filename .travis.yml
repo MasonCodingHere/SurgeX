@@ -11,8 +11,7 @@ services:
   - mysql
 before_install:
   - sudo mysql -e 'CREATE DATABASE SurgeX_DB;'
-  - sudo mysql -e 'USE SurgeX_DB;'
-  - sudo mysql -e 'CREATE TABLE user(
+  - sudo mysql -e 'USE SurgeX_DB; && CREATE TABLE user(
                    username char(50) NULL,
                    passwd char(50) NULL
                    )ENGINE=InnoDB;'
