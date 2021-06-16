@@ -10,8 +10,8 @@ Linux下C++轻量级Web服务器，助力初学者快速实践网络编程，搭
 
 ## 快速运行
 * 服务器测试环境
-	* Ubuntu版本16.04
-	* MySQL版本5.7.29
+	* 系统版本：CentOS 7.9
+	* MySQL版本：5.7.34
 * 浏览器测试环境
 	* Windows、Linux均可
 	* Chrome
@@ -30,9 +30,6 @@ Linux下C++轻量级Web服务器，助力初学者快速实践网络编程，搭
         username char(50) NULL,
         passwd char(50) NULL
     )ENGINE=InnoDB;
-
-    // 添加数据
-    INSERT INTO user(username, passwd) VALUES('name', 'passwd');
     ```
 
 * 修改main.cpp中的数据库初始化信息
