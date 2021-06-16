@@ -12,7 +12,7 @@ set(CXX_FLAGS
     -g
     -Wno-unused-parameter
     -pthread
-    -lmysqlclient
+    -mysqlclient
 )
 
 
