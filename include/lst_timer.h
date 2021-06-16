@@ -20,7 +20,6 @@
 #include <errno.h>
 #include <sys/wait.h>
 #include <sys/uio.h>
-
 #include <time.h>
 #include "log.h"
 

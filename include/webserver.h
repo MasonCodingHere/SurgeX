@@ -11,7 +11,6 @@
 #include <stdlib.h>
 #include <cassert>
 #include <sys/epoll.h>
-
 #include "threadpool.h"
 #include "http_conn.h"
 
