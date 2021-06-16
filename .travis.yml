@@ -1,6 +1,6 @@
 language: cpp
 sudo: required
-dist: trusty
+dist: bionic
 compiler:
   - g++
 os:
@@ -10,11 +10,12 @@ install:
 services:
   - mysql
 before_install:
-  - sudo mysql -e 'CREATE DATABASE SurgeX_DB;'
-  - sudo mysql -e 'USE SurgeX_DB; && CREATE TABLE user(
-                   username char(50) NULL,
-                   passwd char(50) NULL
-                   )ENGINE=InnoDB;'
+  - sudo mysql -e 'CREATE DATABASE SurgeX_DB;
+                   USE SurgeX_DB;
+                   CREATE TABLE user(
+                                    username char(50) NULL,
+                                    passwd char(50) NULL
+                                    )ENGINE=InnoDB;'
 env:
   - BUILD_TYPE=debug
   - BUILD_TYPE=release
