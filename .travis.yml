@@ -23,7 +23,6 @@ before_script:
                                     username char(50) NULL,
                                     passwd char(50) NULL
                                     )ENGINE=InnoDB;'
-  - mysql_config
 env:
   - BUILD_TYPE=debug
   - BUILD_TYPE=release
