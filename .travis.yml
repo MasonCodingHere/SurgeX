@@ -9,6 +9,13 @@ install:
   - sudo apt-get install cmake
 services:
   - mysql
+addons:
+  apt:
+   sources:
+    - mysql-5.7
+   packages:
+    - mysql-server
+    - mysql-client
 before_script:
   - sudo mysql -e 'CREATE DATABASE SurgeX_DB;
                    USE SurgeX_DB;
