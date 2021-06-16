@@ -13,7 +13,6 @@ set(CXX_FLAGS
     -Wno-unused-parameter
     -pthread
     -lmysqlclient
-    `mysql_config --cflags --libs`
 )
 
 
