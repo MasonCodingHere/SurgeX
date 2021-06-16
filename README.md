@@ -72,7 +72,7 @@ Linux下C++轻量级Web服务器，助力初学者快速实践网络编程，搭
 * -l，选择日志写入方式，默认同步写入
 	* 0，同步写入
 	* 1，异步写入
-* -m，listenfd和connfd的模式组合，默认使用LT + LT
+* -m，listenfd和connfd的模式组合，默认使用LT + ET
 	* 0，表示使用LT + LT
 	* 1，表示使用LT + ET
     * 2，表示使用ET + LT
@@ -87,6 +87,6 @@ Linux下C++轻量级Web服务器，助力初学者快速实践网络编程，搭
 * -c，关闭日志，默认打开
 	* 0，打开日志
 	* 1，关闭日志
-* -a，选择反应堆模型，默认Proactor
+* -a，选择反应堆模型，默认Reactor
 	* 0，Proactor模型
 	* 1，Reactor模型
