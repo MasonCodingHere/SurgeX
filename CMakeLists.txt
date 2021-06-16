@@ -11,7 +11,7 @@ endif()
 set(CXX_FLAGS
     -g
     -Wno-unused-parameter
-    -lpthread
+    -pthread
     -lmysqlclient
 )
 
