@@ -5,8 +5,7 @@
 
 using namespace std;
 
-class Config
-{
+class Config{
 public:
     Config();
     ~Config(){};

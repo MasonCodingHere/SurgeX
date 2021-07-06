@@ -13,8 +13,7 @@
 
 using namespace std;
 
-class connection_pool
-{
+class connection_pool{
 public:
 	MYSQL *GetConnection();				 //获取数据库连接
 	bool ReleaseConnection(MYSQL *conn); //释放连接
@@ -47,7 +46,6 @@ public:
 };
 
 class connectionRAII{
-
 public:
 	connectionRAII(MYSQL **con, connection_pool *connPool);
 	~connectionRAII();

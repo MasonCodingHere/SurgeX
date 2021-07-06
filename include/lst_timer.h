@@ -23,17 +23,17 @@
 #include <time.h>
 #include "log.h"
 
-class util_timer;
+class util_timer; //前向声明
 
-struct client_data
-{
+// 用户数据结构：客户端socket地址、socket文件描述符、定时器
+struct client_data{
     sockaddr_in address;
     int sockfd;
     util_timer *timer;
 };
 
-class util_timer
-{
+//定时器类
+class util_timer{
 public:
     util_timer() : prev(NULL), next(NULL) {}
 
@@ -46,8 +46,8 @@ public:
     util_timer *next;
 };
 
-class sort_timer_lst
-{
+//定时器链表。它是一个升序、双向链表，且带有头节点和尾节点
+class sort_timer_lst{
 public:
     sort_timer_lst();
     ~sort_timer_lst();
@@ -64,8 +64,7 @@ private:
     util_timer *tail;
 };
 
-class Utils
-{
+class Utils{
 public:
     Utils() {}
     ~Utils() {}

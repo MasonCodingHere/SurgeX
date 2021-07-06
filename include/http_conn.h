@@ -1,5 +1,6 @@
 #ifndef HTTPCONNECTION_H
 #define HTTPCONNECTION_H
+
 #include <unistd.h>
 #include <signal.h>
 #include <sys/types.h>
@@ -20,20 +21,22 @@
 #include <sys/wait.h>
 #include <sys/uio.h>
 #include <map>
-
 #include "locker.h"
 #include "sql_connection_pool.h"
 #include "lst_timer.h"
 #include "log.h"
 
-class http_conn
-{
+class http_conn{
 public:
+    //文件名的最大长度
     static const int FILENAME_LEN = 200;
+    //读缓冲区的大小
     static const int READ_BUFFER_SIZE = 2048;
+    // 写缓冲区的大小    
     static const int WRITE_BUFFER_SIZE = 1024;
-    enum METHOD
-    {
+
+    //HTTP请求方法
+    enum METHOD{
         GET = 0,
         POST,
         HEAD,
@@ -44,14 +47,16 @@ public:
         CONNECT,
         PATH
     };
-    enum CHECK_STATE
-    {
+
+    //解析客户请求时，主状态机所处的状态
+    enum CHECK_STATE{
         CHECK_STATE_REQUESTLINE = 0,
         CHECK_STATE_HEADER,
         CHECK_STATE_CONTENT
     };
-    enum HTTP_CODE
-    {
+
+    //服务器处理HTTP请求可能的结果
+    enum HTTP_CODE{
         NO_REQUEST,
         GET_REQUEST,
         BAD_REQUEST,
@@ -61,8 +66,9 @@ public:
         INTERNAL_ERROR,
         CLOSED_CONNECTION
     };
-    enum LINE_STATUS
-    {
+
+    //行的读取状态
+    enum LINE_STATUS{
         LINE_OK = 0,
         LINE_BAD,
         LINE_OPEN
@@ -78,8 +84,7 @@ public:
     void process();
     bool read_once();
     bool write();
-    sockaddr_in *get_address()
-    {
+    sockaddr_in *get_address(){
         return &m_address;
     }
     void initmysql_result(connection_pool *connPool);

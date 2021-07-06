@@ -10,21 +10,18 @@
 
 using namespace std;
 
-connection_pool::connection_pool()
-{
+connection_pool::connection_pool(){
 	m_CurConn = 0;
 	m_FreeConn = 0;
 }
 
-connection_pool *connection_pool::GetInstance()
-{
+connection_pool *connection_pool::GetInstance(){
 	static connection_pool connPool;
 	return &connPool;
 }
 
 //构造初始化
-void connection_pool::init(string url, string User, string PassWord, string DBName, int Port, int MaxConn, int close_log)
-{
+void connection_pool::init(string url, string User, string PassWord, string DBName, int Port, int MaxConn, int close_log){
 	m_url = url;
 	m_Port = Port;
 	m_User = User;
@@ -32,23 +29,20 @@ void connection_pool::init(string url, string User, string PassWord, string DBNa
 	m_DatabaseName = DBName;
 	m_close_log = close_log;
 
-	for (int i = 0; i < MaxConn; i++)
-	{
+	for (int i = 0; i < MaxConn; i++){
 		MYSQL *con = NULL;
 		con = mysql_init(con);
-
-		if (con == NULL)
-		{
+		if (con == NULL){
 			LOG_ERROR("MySQL Error");
 			exit(1);
 		}
+
 		con = mysql_real_connect(con, url.c_str(), User.c_str(), PassWord.c_str(), DBName.c_str(), Port, NULL, 0);
-
-		if (con == NULL)
-		{
+		if (con == NULL){
 			LOG_ERROR("MySQL Error");
 			exit(1);
 		}
+
 		connList.push_back(con);
 		++m_FreeConn;
 	}
@@ -60,8 +54,7 @@ void connection_pool::init(string url, string User, string PassWord, string DBNa
 
 
 //当有请求时，从数据库连接池中返回一个可用连接，更新使用和空闲连接数
-MYSQL *connection_pool::GetConnection()
-{
+MYSQL *connection_pool::GetConnection(){
 	MYSQL *con = NULL;
 
 	if (0 == connList.size())
@@ -82,8 +75,7 @@ MYSQL *connection_pool::GetConnection()
 }
 
 //释放当前使用的连接
-bool connection_pool::ReleaseConnection(MYSQL *con)
-{
+bool connection_pool::ReleaseConnection(MYSQL *con){
 	if (NULL == con)
 		return false;
 
@@ -100,15 +92,11 @@ bool connection_pool::ReleaseConnection(MYSQL *con)
 }
 
 //销毁数据库连接池
-void connection_pool::DestroyPool()
-{
-
+void connection_pool::DestroyPool(){
 	lock.lock();
-	if (connList.size() > 0)
-	{
+	if (connList.size() > 0){
 		list<MYSQL *>::iterator it;
-		for (it = connList.begin(); it != connList.end(); ++it)
-		{
+		for (it = connList.begin(); it != connList.end(); ++it){
 			MYSQL *con = *it;
 			mysql_close(con);
 		}
@@ -121,13 +109,11 @@ void connection_pool::DestroyPool()
 }
 
 //当前空闲的连接数
-int connection_pool::GetFreeConn()
-{
+int connection_pool::GetFreeConn(){
 	return this->m_FreeConn;
 }
 
-connection_pool::~connection_pool()
-{
+connection_pool::~connection_pool(){
 	DestroyPool();
 }
 
