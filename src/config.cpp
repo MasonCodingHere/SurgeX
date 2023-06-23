@@ -1,8 +1,8 @@
 #include "config.h"
 
 Config::Config(){
-    //端口号,默认2021
-    PORT = 2021;
+    //端口号,默认2023
+    PORT = 2023;
 
     //日志写入方式，默认同步
     LOGWrite = 0;
