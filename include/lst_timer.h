@@ -25,7 +25,7 @@
 
 class util_timer; //前向声明
 
-// 用户数据结构：客户端socket地址、socket文件描述符、定时器
+// 客户端数据结构：客户端socket地址、socket文件描述符、定时器
 struct client_data{
     sockaddr_in address;
     int sockfd;
@@ -39,7 +39,7 @@ public:
 
 public:
     time_t expire;
-    
+    //回调函数
     void (* cb_func)(client_data *);
     client_data *user_data;
     util_timer *prev;

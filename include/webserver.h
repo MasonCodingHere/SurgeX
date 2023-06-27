@@ -14,12 +14,11 @@
 #include "threadpool.h"
 #include "http_conn.h"
 
-const int MAX_FD = 65536;           //最大文件描述符
+const int MAX_FD = 65536;           //最大文件描述符个数
 const int MAX_EVENT_NUMBER = 10000; //最大事件数
 const int TIMESLOT = 5;             //最小超时单位
 
-class WebServer
-{
+class WebServer{
 public:
     WebServer();
     ~WebServer();
@@ -37,7 +36,7 @@ public:
     void timer(int connfd, struct sockaddr_in client_address);
     void adjust_timer(util_timer *timer);
     void deal_timer(util_timer *timer, int sockfd);
-    bool dealclinetdata();
+    bool dealclientdata();
     bool dealwithsignal(bool& timeout, bool& stop_server);
     void dealwithread(int sockfd);
     void dealwithwrite(int sockfd);
@@ -70,6 +69,7 @@ public:
 
     int m_listenfd;
     int m_OPT_LINGER;
+    
     int m_TRIGMode;
     int m_LISTENTrigmode;
     int m_CONNTrigmode;

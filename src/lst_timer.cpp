@@ -23,6 +23,7 @@ void sort_timer_lst::add_timer(util_timer *timer){
         head = tail = timer;
         return;
     }
+    //若新结点timer是新头结点
     if (timer->expire < head->expire){
         timer->next = head;
         head->prev = timer;
@@ -32,6 +33,31 @@ void sort_timer_lst::add_timer(util_timer *timer){
     add_timer(timer, head);
 }
 
+void sort_timer_lst::add_timer(util_timer *timer, util_timer *lst_head){
+    util_timer *prev = lst_head;
+    util_timer *tmp = prev->next;
+    while (tmp){
+        //插在中间
+        if (timer->expire < tmp->expire){
+            prev->next = timer;
+            timer->next = tmp;
+            tmp->prev = timer;
+            timer->prev = prev;
+            break;
+        }
+        prev = tmp;
+        tmp = tmp->next;
+    }
+    //插在尾部成为新的尾节点
+    if (!tmp){
+        prev->next = timer;
+        timer->prev = prev;
+        timer->next = NULL;
+        tail = timer;
+    }
+}
+
+//调整节点timer，使链表符合升序
 void sort_timer_lst::adjust_timer(util_timer *timer){
     if (!timer){
         return;
@@ -40,12 +66,14 @@ void sort_timer_lst::adjust_timer(util_timer *timer){
     if (!tmp || (timer->expire < tmp->expire)){
         return;
     }
+    //若time为头结点，则让下一结点作为头结点，取出timer节点后再通过addtimer函数重新将其加入链表
     if (timer == head){
         head = head->next;
         head->prev = NULL;
         timer->next = NULL;
         add_timer(timer, head);
     }
+    //若timer为中间节点，则将其取出，再通过addtimer函数重新将其加入链表
     else{
         timer->prev->next = timer->next;
         timer->next->prev = timer->prev;
@@ -53,6 +81,7 @@ void sort_timer_lst::adjust_timer(util_timer *timer){
     }
 }
 
+//在链表中删除指定定时器timer
 void sort_timer_lst::del_timer(util_timer *timer){
     if (!timer){
         return;
@@ -80,46 +109,29 @@ void sort_timer_lst::del_timer(util_timer *timer){
     delete timer;
 }
 
+//定时任务处理函数
 void sort_timer_lst::tick(){
     if (!head){
         return;
     }
-    
+    //获取当前时间
     time_t cur = time(NULL);
     util_timer *tmp = head;
+    //遍历定时器链表
     while (tmp){
+        //链表容器为升序排列，当前时间小于定时器的超时时间，则后面的定时器也没有到期
         if (cur < tmp->expire){
             break;
         }
+        //当前定时器到期，则调用回调函数，执行定时事件
         tmp->cb_func(tmp->user_data);
+        //将处理后的定时器从链表容器中删除，并重置头结点
         head = tmp->next;
         if (head){
             head->prev = NULL;
         }
         delete tmp;
         tmp = head;
-    }
-}
-
-void sort_timer_lst::add_timer(util_timer *timer, util_timer *lst_head){
-    util_timer *prev = lst_head;
-    util_timer *tmp = prev->next;
-    while (tmp){
-        if (timer->expire < tmp->expire){
-            prev->next = timer;
-            timer->next = tmp;
-            tmp->prev = timer;
-            timer->prev = prev;
-            break;
-        }
-        prev = tmp;
-        tmp = tmp->next;
-    }
-    if (!tmp){
-        prev->next = timer;
-        timer->prev = prev;
-        timer->next = NULL;
-        tail = timer;
     }
 }
 
@@ -135,7 +147,8 @@ int Utils::setnonblocking(int fd){
     return old_option;
 }
 
-//将内核事件表注册读事件，ET模式，选择开启EPOLLONESHOT
+//向内核事件表注册读事件，ET模式，选择开启EPOLLONESHOT
+//EPOLLONESHOT使一个socket在任一时刻只被一个线程处理
 void Utils::addfd(int epollfd, int fd, bool one_shot, int TRIGMode){
     epoll_event event;
     event.data.fd = fd;
@@ -156,6 +169,7 @@ void Utils::sig_handler(int sig){
     //为保证函数的可重入性，保留原来的errno
     int save_errno = errno;
     int msg = sig;
+    //将信号发送到管道的一端u_pipefd[1]，对方在管道另一端u_pipefd[0]收到该信号
     send(u_pipefd[1], (char *)&msg, 1, 0);
     errno = save_errno;
 }
