@@ -12,10 +12,8 @@ Log::Log()
     m_is_async = false;
 }
 
-Log::~Log()
-{
-    if (m_fp != NULL)
-    {
+Log::~Log(){
+    if(m_fp != NULL){
         fclose(m_fp);
     }
 }
