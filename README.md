@@ -1,7 +1,5 @@
 # SurgeX——A Lightweight Web Server Based On C++
 
-[![CI](https://github.com/MasonCodingHere/SurgeX/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/MasonCodingHere/SurgeX/actions/workflows/ci.yml)
-
 ## 概述
 Linux下C++轻量级Web服务器，助力初学者快速实践网络编程，搭建属于自己的服务器.
 
