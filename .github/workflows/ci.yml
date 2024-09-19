@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: 123456
+          MYSQL_DATABASE: SurgeX_DB
+          MYSQL_USER: root
+          MYSQL_PASSWORD: 123456
+        options: --health-cmd "mysqladmin ping -hlocalhost --silent" --health-interval 10s --health-timeout 30s --health-retries 5
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y cmake g++
+
+    - name: Wait for MySQL to be ready
+      run: |
+        echo "Waiting for MySQL to be ready..."
+        sleep 30  # Adjust this as necessary based on your environment
+
+    - name: Set up MySQL
+      run: |
+        mysql -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS SurgeX_DB;
+                                USE SurgeX_DB;
+                                CREATE TABLE IF NOT EXISTS user (
+                                  username CHAR(50) NULL,
+                                  passwd CHAR(50) NULL
+                                ) ENGINE=InnoDB;'
+
+    - name: Build project
+      env:
+        BUILD_TYPE: debug  # Set this to 'release' for a release build
+      run: ./build.sh
