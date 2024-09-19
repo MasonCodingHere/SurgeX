@@ -35,16 +35,16 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get update && sudo apt-get install -y cmake g++
 
-    - name: Check MySQL container status
-      run: |
-        sudo docker ps -a
-        sudo docker logs $(sudo docker ps -q --filter ancestor=mysql:5.7)
+    - name: Check MySQL container logs
+      run: sudo docker logs $(sudo docker ps -q --filter ancestor=mysql:5.7)
 
     - name: Set up MySQL
+      env:
+        MYSQL_ROOT_PASSWORD: root
       run: |
         echo "Waiting for MySQL to be ready..."
-        for i in {1..60}; do
-          if mysqladmin ping -hlocalhost -uroot -proot --silent; then
+        for i in {1..120}; do
+          if mysqladmin ping -hlocalhost -uroot -p$MYSQL_ROOT_PASSWORD --silent; then
             echo "MySQL is ready."
             break
           else
@@ -53,13 +53,21 @@ jobs:
           fi
         done
 
+        # Check if MySQL is accessible
+        if mysql -hlocalhost -uroot -p$MYSQL_ROOT_PASSWORD -e "status"; then
+          echo "MySQL is accessible."
+        else
+          echo "MySQL is not accessible."
+          exit 1
+        fi
+
         # Create database and table
-        mysql -hlocalhost -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS SurgeX_DB;
-                                           USE SurgeX_DB;
-                                           CREATE TABLE IF NOT EXISTS user (
-                                             username CHAR(50) NULL,
-                                             passwd CHAR(50) NULL
-                                           ) ENGINE=InnoDB;'
+        mysql -hlocalhost -uroot -p$MYSQL_ROOT_PASSWORD -e 'CREATE DATABASE IF NOT EXISTS SurgeX_DB;
+                                                           USE SurgeX_DB;
+                                                           CREATE TABLE IF NOT EXISTS user (
+                                                             username CHAR(50) NULL,
+                                                             passwd CHAR(50) NULL
+                                                           ) ENGINE=InnoDB;'
       
     - name: Build project
       env:
