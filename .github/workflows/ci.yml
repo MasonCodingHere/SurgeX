@@ -34,7 +34,15 @@ jobs:
     - name: Wait for MySQL to be ready
       run: |
         echo "Waiting for MySQL to be ready..."
-        sleep 30  # Adjust this as necessary based on your environment
+        for i in {1..60}; do
+          if mysqladmin ping -hlocalhost -uroot -proot --silent; then
+            echo "MySQL is ready."
+            break
+          else
+            echo "MySQL not ready yet. Waiting..."
+            sleep 10
+          fi
+        done
 
     - name: Set up MySQL
       run: |
@@ -46,6 +54,4 @@ jobs:
                                 ) ENGINE=InnoDB;'
 
     - name: Build project
-      env:
-        BUILD_TYPE: debug  # Set this to 'release' for a release build
       run: ./build.sh
