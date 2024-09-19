@@ -26,7 +26,7 @@ jobs:
           MYSQL_DATABASE: SurgeX_DB
           MYSQL_USER: user
           MYSQL_PASSWORD: password
-        options: --health-cmd "mysqladmin ping --silent" --health-interval 10s --health-timeout 30s --health-retries 5
+        options: --health-cmd "mysqladmin ping -hlocalhost --silent" --health-interval 10s --health-timeout 30s --health-retries 5
 
     steps:
     - name: Checkout code
@@ -35,12 +35,22 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get update && sudo apt-get install -y cmake g++
 
+    - name: Check MySQL container status
+      run: |
+        sudo docker ps -a
+        sudo docker logs $(sudo docker ps -q --filter ancestor=mysql:5.7)
+
     - name: Set up MySQL
       run: |
-        # Wait for MySQL to be ready
-        until mysqladmin ping -hlocalhost --silent; do
-          echo "Waiting for MySQL to be ready..."
-          sleep 1
+        echo "Waiting for MySQL to be ready..."
+        for i in {1..60}; do
+          if mysqladmin ping -hlocalhost -uroot -proot --silent; then
+            echo "MySQL is ready."
+            break
+          else
+            echo "MySQL not ready yet. Waiting..."
+            sleep 10
+          fi
         done
 
         # Create database and table
@@ -50,9 +60,7 @@ jobs:
                                              username CHAR(50) NULL,
                                              passwd CHAR(50) NULL
                                            ) ENGINE=InnoDB;'
-      env:
-        MYSQL_ROOT_PASSWORD: root
-
+      
     - name: Build project
       env:
         BUILD_TYPE: ${{ matrix.build_type }}
