@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        build_type: [debug, release]
+
+    services:
+      mysql:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: SurgeX_DB
+          MYSQL_USER: user
+          MYSQL_PASSWORD: password
+        options: --health-cmd "mysqladmin ping --silent" --health-interval 10s
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y cmake g++
+
+    - name: Set up MySQL
+      run: |
+        sudo mysql -e 'CREATE DATABASE IF NOT EXISTS SurgeX_DB;
+                       USE SurgeX_DB;
+                       CREATE TABLE IF NOT EXISTS user (
+                         username CHAR(50) NULL,
+                         passwd CHAR(50) NULL
+                       ) ENGINE=InnoDB;'
+      env:
+        MYSQL_ROOT_PASSWORD: root
+
+    - name: Build project
+      env:
+        BUILD_TYPE: ${{ matrix.build_type }}
+      run: ./build.sh
